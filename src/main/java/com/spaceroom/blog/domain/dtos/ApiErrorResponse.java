@@ -11,12 +11,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+// This class represents the structure of an API error response.
 public class ApiErrorResponse {
+
 
     private int status;
     private String message;
     private List<FieldError> errors;
 
+    // Nested class to represent individual field errors
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

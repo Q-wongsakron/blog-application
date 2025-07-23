@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@ControllerAdvice
+@ControllerAdvice // @ControllerAdvice is used to handle exceptions globally across all controllers
 @Slf4j // Using @Slf4j for logging errors
 public class ErrorController {
 
+    // This method handles all exceptions that are not specifically handled by other methods
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleException(Exception ex){
         log.error("Caught exception", ex);
@@ -23,6 +24,7 @@ public class ErrorController {
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // This method handles IllegalArgumentException specifically
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
         ApiErrorResponse error = ApiErrorResponse.builder()
