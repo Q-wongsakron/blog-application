@@ -1,4 +1,10 @@
 package com.spaceroom.blog.services;
 
-public class CategoryService {
+import com.spaceroom.blog.domain.entities.Category;
+
+import java.util.List;
+
+public interface CategoryService {
+    List<Category> listCategories();
+
 }
