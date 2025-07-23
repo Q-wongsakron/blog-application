@@ -2,15 +2,15 @@ package com.spaceroom.blog.controllers;
 
 
 import com.spaceroom.blog.domain.dtos.CategoryDto;
+import com.spaceroom.blog.domain.dtos.CreateCategoryRequest;
 import com.spaceroom.blog.domain.entities.Category;
 import com.spaceroom.blog.mappers.CategoryMapper;
 import com.spaceroom.blog.services.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +32,17 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> createCategory() {
+    public ResponseEntity<CategoryDto> createCategory(
+            // @Valid @RequestBody createCategoryRequest is used to validate the incoming request body
+            @Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
 
+        // converts the CreateCategoryRequest to a Category entity
+        Category categoryToCreate = categoryMapper.toEntity(createCategoryRequest);
+        // calls the service to create the category
+        Category savedCategory = categoryService.createCategory(categoryToCreate);
+        return new ResponseEntity<>(
+                categoryMapper.toDto(savedCategory),
+                HttpStatus.CREATED
+        );
     }
 }

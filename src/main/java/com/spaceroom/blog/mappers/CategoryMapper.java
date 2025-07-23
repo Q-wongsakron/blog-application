@@ -2,6 +2,7 @@ package com.spaceroom.blog.mappers;
 
 import com.spaceroom.blog.domain.PostStatus;
 import com.spaceroom.blog.domain.dtos.CategoryDto;
+import com.spaceroom.blog.domain.dtos.CreateCategoryRequest;
 import com.spaceroom.blog.domain.entities.Category;
 import com.spaceroom.blog.domain.entities.Post;
 import jdk.jfr.Name;
@@ -19,6 +20,8 @@ public interface CategoryMapper {
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     CategoryDto toDto(Category category);
 
+    // method to convert CreateCategoryRequest to Category entity
+    Category toEntity(CreateCategoryRequest createCategoryRequest);
 
     @Named("calculatePostCount")
     default long calculatePostCount(List<Post> posts) {
