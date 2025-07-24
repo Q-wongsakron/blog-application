@@ -43,6 +43,7 @@ public class ErrorController {
                 .message(ex.getMessage())
                 .build();
 
+        // Conflict status is used when the request could not be completed
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 }
