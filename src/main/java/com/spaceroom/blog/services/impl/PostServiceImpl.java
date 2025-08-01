@@ -4,6 +4,7 @@ import com.spaceroom.blog.domain.PostStatus;
 import com.spaceroom.blog.domain.entities.Category;
 import com.spaceroom.blog.domain.entities.Post;
 import com.spaceroom.blog.domain.entities.Tag;
+import com.spaceroom.blog.domain.entities.User;
 import com.spaceroom.blog.repositories.PostRepository;
 import com.spaceroom.blog.services.CategoryService;
 import com.spaceroom.blog.services.PostService;
@@ -55,5 +56,11 @@ public class PostServiceImpl implements PostService {
 
 
 
+    }
+
+    // Retrieves all draft posts authored by the specified user.
+    @Override
+    public List<Post> getDraftPosts(User user) {
+        return postRepository.findAllByAuthorAndStatus(user, PostStatus.DRAFT);
     }
 }
