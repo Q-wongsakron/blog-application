@@ -1,7 +1,7 @@
 package com.spaceroom.blog.controllers;
 
 import com.spaceroom.blog.domain.dtos.CreateTagsRequest;
-import com.spaceroom.blog.domain.dtos.TagResponse;
+import com.spaceroom.blog.domain.dtos.TagDto;
 import com.spaceroom.blog.domain.entities.Tag;
 import com.spaceroom.blog.mappers.TagMapper;
 import com.spaceroom.blog.services.TagService;
@@ -22,22 +22,22 @@ public class TagController {
     private final TagMapper tagMapper;
 
     @GetMapping
-    public ResponseEntity<List<TagResponse>> getAllTags() {
+    public ResponseEntity<List<TagDto>> getAllTags() {
         List<Tag> tags = tagService.getTags();
 
-        List<TagResponse> tagResponses = tags.stream().map(tagMapper::toTagResponse).toList();
-        return ResponseEntity.ok(tagResponses);
+        List<TagDto> tagResponse = tags.stream().map(tagMapper::toTagResponse).toList();
+        return ResponseEntity.ok(tagResponse);
     }
 
     @PostMapping
-    public ResponseEntity<List<TagResponse>> createTags(@RequestBody CreateTagsRequest createTagsRequest) {
+    public ResponseEntity<List<TagDto>> createTags(@RequestBody CreateTagsRequest createTagsRequest) {
 
        List<Tag> savedTags = tagService.createTags(createTagsRequest.getNames());
-       List<TagResponse> createdTagResponses = savedTags.stream().map(
+       List<TagDto> createdTagResponse = savedTags.stream().map(
                tagMapper::toTagResponse
        ).toList();
        return new ResponseEntity<>(
-               createdTagResponses,
+               createdTagResponse,
                HttpStatus.CREATED
        );
 
