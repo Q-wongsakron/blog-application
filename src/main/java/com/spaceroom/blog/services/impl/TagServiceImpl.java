@@ -67,4 +67,14 @@ public class TagServiceImpl implements TagService {
                 () ->  new EntityNotFoundException("Tag not found with id" + id)
         );
     }
+
+    @Override
+    public List<Tag> getTagsByIds(Set<UUID> ids) {
+        // Validate that the provided IDs are not empty
+        List<Tag> foundTags = tagRepository.findAllById(ids);
+        if(foundTags.size() != ids.size()) {
+            throw new EntityNotFoundException("Not all tags found for the provided IDs");
+        }
+        return foundTags;
+    }
 }
